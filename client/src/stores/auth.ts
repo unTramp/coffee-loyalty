@@ -9,12 +9,20 @@ interface StaffInfo {
   role: string;
 }
 
+export interface StaffListItem {
+  id: string;
+  name: string;
+  role: string;
+  emailMasked: string;
+}
+
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   staff: StaffInfo | null;
-  requestCode: (email: string) => Promise<void>;
-  verifyCode: (email: string, code: string) => Promise<void>;
+  fetchStaff: () => Promise<StaffListItem[]>;
+  requestCode: (staffId: string) => Promise<void>;
+  verifyCode: (staffId: string, code: string) => Promise<void>;
   logout: () => void;
   getToken: () => Promise<string | null>;
 }
@@ -26,20 +34,26 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: null,
       staff: null,
 
-      requestCode: async (email) => {
+      fetchStaff: async () => {
+        const res = await fetch(`${API}/auth/staff`);
+        if (!res.ok) throw new Error('Failed to fetch staff');
+        return res.json();
+      },
+
+      requestCode: async (staffId) => {
         const res = await fetch(`${API}/auth/request-code`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ staffId }),
         });
         if (!res.ok) throw new Error('Failed to request code');
       },
 
-      verifyCode: async (email, code) => {
+      verifyCode: async (staffId, code) => {
         const res = await fetch(`${API}/auth/verify-code`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, code }),
+          body: JSON.stringify({ staffId, code }),
         });
         if (!res.ok) throw new Error('Invalid code');
         const data = await res.json();
