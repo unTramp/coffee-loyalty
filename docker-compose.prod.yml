@@ -1,0 +1,99 @@
+services:
+  coffee-postgres:
+    image: postgres:16-alpine
+    container_name: coffee-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-coffee}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-coffee}
+      POSTGRES_DB: ${DB_NAME:-coffee_loyalty}
+    volumes:
+      - coffee_pgdata:/var/lib/postgresql/data
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+  coffee-redis:
+    image: redis:7-alpine
+    container_name: coffee-redis
+    volumes:
+      - coffee_redis:/data
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+  coffee-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: coffee-server
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-coffee}:${DB_PASSWORD:-coffee}@coffee-postgres:5432/${DB_NAME:-coffee_loyalty}
+      REDIS_URL: redis://coffee-redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      HMAC_SECRET: ${HMAC_SECRET}
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_SECRET: ${BOT_SECRET}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8090}
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+    depends_on:
+      - coffee-postgres
+      - coffee-redis
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+  coffee-client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    container_name: coffee-client
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+  coffee-bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: coffee-bot
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_SECRET: ${BOT_SECRET}
+      API_URL: http://coffee-server:3000
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8090}
+      SHOP_ID: ${SHOP_ID}
+      BOT_MODE: webhook
+      BOT_PORT: 3001
+    depends_on:
+      - coffee-server
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+  coffee-nginx:
+    image: nginx:alpine
+    container_name: coffee-nginx
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - coffee-server
+      - coffee-client
+      - coffee-bot
+    networks:
+      - coffee-net
+    restart: unless-stopped
+
+networks:
+  coffee-net:
+    driver: bridge
+
+volumes:
+  coffee_pgdata:
+  coffee_redis:
