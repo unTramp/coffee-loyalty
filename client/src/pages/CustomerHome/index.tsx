@@ -36,7 +36,7 @@ export function CustomerHome() {
   }
 
   return (
-    <div className="min-h-screen p-4 max-w-md mx-auto">
+    <div className="min-h-screen px-2 py-4 max-w-md mx-auto">
       {/* Header */}
       <div className="text-center mb-6 pt-6">
         <h1 className="text-3xl font-bold tracking-wider" style={{ color: '#1a1a1a' }}>
@@ -47,20 +47,13 @@ export function CustomerHome() {
         </p>
       </div>
 
-      {/* Greeting */}
-      <div className="text-center mb-5">
-        <p className="text-lg" style={{ color: '#1a1a1a' }}>
-          Привет, {cardData.customer.firstName}!
-        </p>
-      </div>
-
       {/* QR Card */}
-      <div className="mb-6">
+      <div className="mb-1">
         <QrDisplay customerId={customerId!} fetchQr={fetchQr} />
       </div>
 
       {/* Stamps */}
-      <div className="mb-5">
+      <div className="mb-5 max-w-sm mx-auto" style={{ marginTop: '-5px' }}>
         <StampCard
           stampCount={cardData.card?.stampCount ?? 0}
           stampGoal={cardData.stampGoal}
