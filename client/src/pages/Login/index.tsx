@@ -8,6 +8,16 @@ const COOLDOWN_SECONDS = 60;
 type Role = 'admin' | 'barista';
 
 export function Login() {
+  const existingStaff = useAuthStore((s) => s.staff);
+  const navigate = useNavigate();
+
+  // If already logged in, redirect immediately
+  useEffect(() => {
+    if (existingStaff) {
+      navigate(existingStaff.role === 'admin' ? '/admin' : '/barista', { replace: true });
+    }
+  }, [existingStaff, navigate]);
+
   const [step, setStep] = useState<'select' | 'code'>('select');
   const [role, setRole] = useState<Role>('barista');
   const [staffList, setStaffList] = useState<StaffListItem[]>([]);
@@ -21,7 +31,6 @@ export function Login() {
   const fetchStaff = useAuthStore((s) => s.fetchStaff);
   const requestCode = useAuthStore((s) => s.requestCode);
   const verifyCode = useAuthStore((s) => s.verifyCode);
-  const navigate = useNavigate();
 
   // Load staff list on mount
   useEffect(() => {

@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useAuthStore } from '../../stores/auth';
 import { Scanner } from '../../components/Scanner';
+import QRCode from 'qrcode';
 
 const API = import.meta.env.VITE_API_URL || '/api';
 
@@ -17,7 +18,22 @@ export function BaristaHome() {
   const [result, setResult] = useState<StampResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showJoinQr, setShowJoinQr] = useState(false);
+  const joinQrCanvasRef = useRef<HTMLCanvasElement>(null);
   const { staff, logout, getToken } = useAuthStore();
+
+  useEffect(() => {
+    if (showJoinQr && joinQrCanvasRef.current) {
+      const joinUrl = `${window.location.origin}/join`;
+      QRCode.toCanvas(joinQrCanvasRef.current, joinUrl, {
+        width: 480,
+        margin: 2,
+        color: { dark: '#000000', light: '#ffffff' },
+      });
+      joinQrCanvasRef.current.style.width = '240px';
+      joinQrCanvasRef.current.style.height = '240px';
+    }
+  }, [showJoinQr]);
 
   const handleScan = useCallback(async (qrPayload: string) => {
     setScanning(false);
@@ -119,16 +135,51 @@ export function BaristaHome() {
           </button>
         </div>
       ) : (
-        <button
-          onClick={() => {
-            setScanning(true);
-            setResult(null);
-            setError(null);
-          }}
-          className="w-full py-4 bg-violet-600 hover:bg-violet-500 text-white font-bold text-lg rounded-xl transition-colors"
+        <div className="space-y-3">
+          <button
+            onClick={() => {
+              setScanning(true);
+              setResult(null);
+              setError(null);
+            }}
+            className="w-full py-4 bg-violet-600 hover:bg-violet-500 text-white font-bold text-lg rounded-xl transition-colors"
+          >
+            📷 Сканировать QR
+          </button>
+          <button
+            onClick={() => setShowJoinQr(true)}
+            className="w-full py-3 bg-white/10 hover:bg-white/15 text-violet-300 font-medium rounded-xl transition-colors"
+          >
+            QR для клиентов
+          </button>
+        </div>
+      )}
+
+      {/* Join QR modal */}
+      {showJoinQr && (
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowJoinQr(false)}
         >
-          📷 Сканировать QR
-        </button>
+          <div
+            className="bg-[#1a1a2e] rounded-2xl p-6 max-w-sm w-full text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-white font-bold text-lg mb-1">Регистрация клиента</h3>
+            <p className="text-violet-300 text-sm mb-4">
+              Покажите этот QR-код клиенту
+            </p>
+            <div className="flex justify-center mb-4 bg-white rounded-xl p-3 inline-block mx-auto">
+              <canvas ref={joinQrCanvasRef} />
+            </div>
+            <button
+              onClick={() => setShowJoinQr(false)}
+              className="w-full py-3 bg-white/10 text-white rounded-xl hover:bg-white/15 transition-colors"
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

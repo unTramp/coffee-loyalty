@@ -64,7 +64,10 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
-      logout: () => set({ accessToken: null, refreshToken: null, staff: null }),
+      logout: () => {
+        localStorage.removeItem('coffee-lastPath');
+        set({ accessToken: null, refreshToken: null, staff: null });
+      },
 
       getToken: async () => {
         const { accessToken, refreshToken } = get();

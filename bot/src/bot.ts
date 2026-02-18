@@ -18,6 +18,17 @@ bot.command('card', cardHandler);
 bot.command('help', helpHandler);
 bot.command('admin', adminHandler);
 
+// Log all updates
+bot.use(async (ctx, next) => {
+  console.log(`[BOT] Update: ${ctx.update.update_id}, type: ${ctx.message?.text || 'unknown'}`);
+  await next();
+});
+
+// Error handler
+bot.catch((err) => {
+  console.error('[BOT] Error:', err);
+});
+
 // Register commands menu in Telegram
 bot.api.setMyCommands([
   { command: 'start', description: 'Регистрация в программе лояльности' },

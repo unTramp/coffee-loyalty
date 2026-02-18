@@ -23,10 +23,13 @@ export const staff = pgTable('staff', {
 
 export const customers = pgTable('customers', {
   id: uuid('id').primaryKey().defaultRandom(),
-  telegramId: varchar('telegram_id', { length: 50 }).notNull().unique(),
+  telegramId: varchar('telegram_id', { length: 50 }).unique(),
+  email: varchar('email', { length: 255 }).unique(),
   firstName: varchar('first_name', { length: 255 }).notNull(),
   lastName: varchar('last_name', { length: 255 }),
   username: varchar('username', { length: 255 }),
+  otpCode: varchar('otp_code', { length: 10 }),
+  otpExpiresAt: timestamp('otp_expires_at'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 

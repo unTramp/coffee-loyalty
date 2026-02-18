@@ -1,13 +1,35 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from './stores/auth';
 import { CustomerHome } from './pages/CustomerHome';
+import { Join } from './pages/Join';
 import { Login } from './pages/Login';
 import { BaristaHome } from './pages/BaristaHome';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminCustomers } from './pages/AdminCustomers';
 import { AdminStaff } from './pages/AdminStaff';
 import { AdminLogs } from './pages/AdminLogs';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
+
+const LAST_PATH_KEY = 'coffee-lastPath';
+
+/** Save current path so PWA can reopen on the same screen */
+function useRememberPath() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    // Only remember meaningful pages, not root or login
+    if (pathname !== '/' && pathname !== '/login' && pathname !== '/join') {
+      localStorage.setItem(LAST_PATH_KEY, pathname);
+    }
+  }, [pathname]);
+}
+
+function SmartRedirect() {
+  const lastPath = localStorage.getItem(LAST_PATH_KEY);
+  if (lastPath) {
+    return <Navigate to={lastPath} replace />;
+  }
+  return <Navigate to="/login" replace />;
+}
 
 function ProtectedRoute({ children, requiredRole }: { children: ReactNode; requiredRole?: string }) {
   const { staff } = useAuthStore();
@@ -17,10 +39,13 @@ function ProtectedRoute({ children, requiredRole }: { children: ReactNode; requi
 }
 
 export default function App() {
+  useRememberPath();
+
   return (
     <Routes>
       {/* Public */}
       <Route path="/customer/:customerId" element={<CustomerHome />} />
+      <Route path="/join" element={<Join />} />
       <Route path="/login" element={<Login />} />
 
       {/* Barista */}
@@ -52,8 +77,8 @@ export default function App() {
         </ProtectedRoute>
       } />
 
-      {/* Default */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* Default — redirect based on saved session */}
+      <Route path="*" element={<SmartRedirect />} />
     </Routes>
   );
 }
