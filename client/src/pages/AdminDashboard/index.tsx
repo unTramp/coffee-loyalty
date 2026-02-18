@@ -37,10 +37,10 @@ export function AdminDashboard() {
     <div className="min-h-screen p-4 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6 pt-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Админ-панель</h1>
-          <p className="text-violet-300 text-sm">{staff?.name}</p>
+          <h1 className="text-2xl font-bold text-gray-900">Админ-панель</h1>
+          <p className="text-gray-500 text-sm">{staff?.name}</p>
         </div>
-        <button onClick={logout} className="text-sm text-violet-400 hover:text-violet-300">
+        <button onClick={logout} className="text-sm text-gray-400 hover:text-gray-600">
           Выйти
         </button>
       </div>
@@ -59,13 +59,13 @@ export function AdminDashboard() {
       </div>
 
       <div className="space-y-2">
-        <Link to="/admin/customers" className="block w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-center transition-colors">
+        <Link to="/admin/customers" className="block w-full py-3 bg-white shadow-sm border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-center transition-colors">
           Клиенты
         </Link>
-        <Link to="/admin/staff" className="block w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-center transition-colors">
+        <Link to="/admin/staff" className="block w-full py-3 bg-white shadow-sm border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-center transition-colors">
           Персонал
         </Link>
-        <Link to="/admin/logs" className="block w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-center transition-colors">
+        <Link to="/admin/logs" className="block w-full py-3 bg-white shadow-sm border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-center transition-colors">
           Логи транзакций
         </Link>
       </div>

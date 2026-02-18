@@ -147,13 +147,13 @@ export function Login() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">☕</h1>
-          <h2 className="text-xl font-semibold text-white">Coffee Loyalty</h2>
-          <p className="text-violet-300 text-sm mt-1">Вход для персонала</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">☕</h1>
+          <h2 className="text-xl font-semibold text-gray-900">Coffee Loyalty</h2>
+          <p className="text-gray-500 text-sm mt-1">Вход для персонала</p>
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500 text-red-300 rounded-xl p-3 text-center text-sm mb-4">
+          <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-center text-sm mb-4">
             {error}
           </div>
         )}
@@ -161,7 +161,7 @@ export function Login() {
         {step === 'select' ? (
           <div className="space-y-4">
             {/* Role segment */}
-            <div className="flex bg-white/10 rounded-xl p-1">
+            <div className="flex bg-gray-100 rounded-xl p-1">
               {(['barista', 'admin'] as Role[]).map((r) => (
                 <button
                   key={r}
@@ -169,7 +169,7 @@ export function Login() {
                   className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${
                     role === r
                       ? 'bg-violet-600 text-white'
-                      : 'text-violet-300 hover:text-white'
+                      : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
                   {r === 'admin' ? 'Админ' : 'Бариста'}
@@ -179,9 +179,9 @@ export function Login() {
 
             {/* Staff list */}
             {fetchLoading ? (
-              <p className="text-violet-300 text-sm text-center py-8">Загрузка...</p>
+              <p className="text-gray-500 text-sm text-center py-8">Загрузка...</p>
             ) : filtered.length === 0 ? (
-              <p className="text-violet-400 text-sm text-center py-8">Нет сотрудников</p>
+              <p className="text-gray-400 text-sm text-center py-8">Нет сотрудников</p>
             ) : (
               <div className="space-y-2">
                 {filtered.map((member) => (
@@ -189,14 +189,14 @@ export function Login() {
                     key={member.id}
                     onClick={() => handleSelectStaff(member)}
                     disabled={loading}
-                    className="w-full flex items-center gap-3 px-4 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/15 disabled:opacity-50 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-4 py-3 bg-white border border-gray-200 shadow-sm rounded-xl hover:bg-gray-50 disabled:opacity-50 transition-colors text-left"
                   >
                     <div className="w-10 h-10 rounded-full bg-violet-600 flex items-center justify-center text-white font-semibold text-sm shrink-0">
                       {member.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-white font-medium truncate">{member.name}</p>
-                      <p className="text-violet-400 text-sm truncate">{member.emailMasked}</p>
+                      <p className="text-gray-900 font-medium truncate">{member.name}</p>
+                      <p className="text-gray-500 text-sm truncate">{member.emailMasked}</p>
                     </div>
                   </button>
                 ))}
@@ -205,8 +205,8 @@ export function Login() {
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="text-violet-300 text-sm text-center">
-              Код отправлен на <span className="text-white font-medium">{selectedStaff?.emailMasked}</span>
+            <p className="text-gray-500 text-sm text-center">
+              Код отправлен на <span className="text-gray-900 font-medium">{selectedStaff?.emailMasked}</span>
             </p>
 
             <div className="flex justify-center gap-3">
@@ -221,26 +221,26 @@ export function Login() {
                   onChange={(e) => handleCodeChange(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
                   disabled={loading}
-                  className="w-14 h-14 text-center text-2xl font-bold bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-violet-400 disabled:opacity-50"
+                  className="w-14 h-14 text-center text-2xl font-bold bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:opacity-50"
                 />
               ))}
             </div>
 
             {loading && (
-              <p className="text-violet-300 text-sm text-center">Проверка...</p>
+              <p className="text-gray-500 text-sm text-center">Проверка...</p>
             )}
 
             <div className="flex flex-col items-center gap-2 pt-2">
               <button
                 onClick={handleResend}
                 disabled={cooldown > 0 || loading}
-                className="text-sm text-violet-400 hover:text-violet-300 disabled:text-violet-600 transition-colors"
+                className="text-sm text-violet-600 hover:text-violet-500 disabled:text-gray-300 transition-colors"
               >
                 {cooldown > 0 ? `Отправить повторно (${cooldown}с)` : 'Отправить повторно'}
               </button>
               <button
                 onClick={() => { setStep('select'); setSelectedStaff(null); setError(''); setCode(Array(CODE_LENGTH).fill('')); }}
-                className="text-sm text-violet-500 hover:text-violet-400 transition-colors"
+                className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
               >
                 Выбрать другого
               </button>

@@ -149,13 +149,13 @@ export function Join() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">☕</h1>
-          <h2 className="text-xl font-semibold text-white">Coffee Loyalty</h2>
-          <p className="text-violet-300 text-sm mt-1">Карта лояльности</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">☕</h1>
+          <h2 className="text-xl font-semibold text-gray-900">Coffee Loyalty</h2>
+          <p className="text-gray-500 text-sm mt-1">Карта лояльности</p>
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500 text-red-300 rounded-xl p-3 text-center text-sm mb-4">
+          <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-center text-sm mb-4">
             {error}
           </div>
         )}
@@ -163,7 +163,7 @@ export function Join() {
         {step === 'email' && (
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
-              <label className="block text-violet-300 text-sm mb-1">Email</label>
+              <label className="block text-gray-500 text-sm mb-1">Email</label>
               <input
                 type="email"
                 value={email}
@@ -171,7 +171,7 @@ export function Join() {
                 placeholder="you@example.com"
                 autoFocus
                 disabled={loading}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-violet-400/50 focus:outline-none focus:border-violet-400 disabled:opacity-50"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:opacity-50"
               />
             </div>
             <button
@@ -186,11 +186,11 @@ export function Join() {
 
         {step === 'name' && (
           <form onSubmit={handleNameSubmit} className="space-y-4">
-            <p className="text-violet-300 text-sm text-center">
+            <p className="text-gray-500 text-sm text-center">
               Вы у нас впервые! Как вас зовут?
             </p>
             <div>
-              <label className="block text-violet-300 text-sm mb-1">Имя</label>
+              <label className="block text-gray-500 text-sm mb-1">Имя</label>
               <input
                 type="text"
                 value={firstName}
@@ -198,7 +198,7 @@ export function Join() {
                 placeholder="Ваше имя"
                 autoFocus
                 disabled={loading}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-violet-400/50 focus:outline-none focus:border-violet-400 disabled:opacity-50"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:opacity-50"
               />
             </div>
             <button
@@ -211,7 +211,7 @@ export function Join() {
             <button
               type="button"
               onClick={() => { setStep('email'); setError(''); }}
-              className="w-full text-sm text-violet-500 hover:text-violet-400 transition-colors"
+              className="w-full text-sm text-gray-400 hover:text-gray-600 transition-colors"
             >
               Назад
             </button>
@@ -220,8 +220,8 @@ export function Join() {
 
         {step === 'code' && (
           <div className="space-y-4">
-            <p className="text-violet-300 text-sm text-center">
-              Код отправлен на <span className="text-white font-medium">{email}</span>
+            <p className="text-gray-500 text-sm text-center">
+              Код отправлен на <span className="text-gray-900 font-medium">{email}</span>
             </p>
 
             <div className="flex justify-center gap-3">
@@ -236,26 +236,26 @@ export function Join() {
                   onChange={(e) => handleCodeChange(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
                   disabled={loading}
-                  className="w-14 h-14 text-center text-2xl font-bold bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-violet-400 disabled:opacity-50"
+                  className="w-14 h-14 text-center text-2xl font-bold bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:opacity-50"
                 />
               ))}
             </div>
 
             {loading && (
-              <p className="text-violet-300 text-sm text-center">Проверка...</p>
+              <p className="text-gray-500 text-sm text-center">Проверка...</p>
             )}
 
             <div className="flex flex-col items-center gap-2 pt-2">
               <button
                 onClick={handleResend}
                 disabled={cooldown > 0 || loading}
-                className="text-sm text-violet-400 hover:text-violet-300 disabled:text-violet-600 transition-colors"
+                className="text-sm text-violet-600 hover:text-violet-500 disabled:text-gray-300 transition-colors"
               >
                 {cooldown > 0 ? `Отправить повторно (${cooldown}с)` : 'Отправить повторно'}
               </button>
               <button
                 onClick={() => { setStep('email'); setError(''); setCode(Array(CODE_LENGTH).fill('')); }}
-                className="text-sm text-violet-500 hover:text-violet-400 transition-colors"
+                className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
               >
                 Другой email
               </button>
