@@ -3,6 +3,7 @@ import { startHandler } from './handlers/start.js';
 import { cardHandler } from './handlers/card.js';
 import { helpHandler } from './handlers/help.js';
 import { adminHandler } from './handlers/admin.js';
+import { qrHandler } from './handlers/qr.js';
 
 const token = process.env.BOT_TOKEN;
 if (!token) {
@@ -17,6 +18,7 @@ bot.command('start', startHandler);
 bot.command('card', cardHandler);
 bot.command('help', helpHandler);
 bot.command('admin', adminHandler);
+bot.command('qr', qrHandler);
 
 // Log all updates
 bot.use(async (ctx, next) => {
@@ -33,6 +35,7 @@ bot.catch((err) => {
 bot.api.setMyCommands([
   { command: 'start', description: 'Регистрация в программе лояльности' },
   { command: 'card', description: 'Моя карта и штампы' },
+  { command: 'qr', description: 'QR-код для регистрации клиентов' },
   { command: 'admin', description: 'Админ-панель' },
   { command: 'help', description: 'Справка' },
 ]);
