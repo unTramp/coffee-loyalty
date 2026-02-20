@@ -23,8 +23,8 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
-                  transform: 'scale(1.3)',
+                  background: 'radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 60%)',
+                  transform: 'scale(0.9)',
                 }}
               />
             )}
