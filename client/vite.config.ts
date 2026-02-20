@@ -9,6 +9,19 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,jpg,svg,ico,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: { maxEntries: 50, maxAgeSeconds: 30 * 24 * 60 * 60 },
+            },
+          },
+        ],
+      },
       manifest: {
         name: 'Coffee Loyalty',
         short_name: 'CoffeeLoyalty',
