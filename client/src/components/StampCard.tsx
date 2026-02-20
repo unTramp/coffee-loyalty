@@ -12,8 +12,8 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
       <div className="flex justify-center gap-2 mb-2">
         {stamps.map((filled, i) => (
           <div
-            key={`${i}-${filled}`}
-            className="relative transition-all duration-300"
+            key={i}
+            className="relative"
             style={{
               width: `${100 / stampGoal - 2}%`,
               maxWidth: 56,
@@ -21,7 +21,7 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
           >
             {filled && (
               <div
-                className="absolute inset-0 rounded-full transition-all duration-300"
+                className="absolute inset-0 rounded-full"
                 style={{
                   background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
                   transform: 'scale(1.3)',
@@ -31,13 +31,9 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
             <img
               src="/cup-stamp.webp"
               alt={filled ? `Штамп ${i + 1}` : `Пусто ${i + 1}`}
-              className="w-full h-auto relative z-10 transition-all duration-300"
+              className={`w-full h-auto relative z-10 ${filled ? 'opacity-100' : 'opacity-25 grayscale'}`}
               draggable={false}
-              style={
-                filled
-                  ? { filter: 'drop-shadow(0 2px 8px rgba(255, 255, 255, 0.7))' }
-                  : { filter: 'grayscale(100%) opacity(0.25)' }
-              }
+              style={filled ? { filter: 'drop-shadow(0 2px 8px rgba(255, 255, 255, 0.7))' } : undefined}
             />
           </div>
         ))}
