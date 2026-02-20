@@ -26,7 +26,7 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
               draggable={false}
               style={
                 filled
-                  ? { filter: 'drop-shadow(0 2px 6px rgba(201, 168, 76, 0.5))' }
+                  ? { filter: 'drop-shadow(0 2px 8px rgba(255, 255, 255, 0.7))' }
                   : { filter: 'grayscale(100%) opacity(0.25)' }
               }
             />
