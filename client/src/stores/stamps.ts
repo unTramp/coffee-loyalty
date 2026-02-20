@@ -24,7 +24,7 @@ export const useStampsStore = create<StampsState>((set) => ({
   fetchCard: async (customerId) => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch(`${API}/customers/${customerId}/card`);
+      const res = await fetch(`${API}/customers/${customerId}/card`, { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to fetch card');
       const data = await res.json();
       set({ cardData: data, loading: false });
