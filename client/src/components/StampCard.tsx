@@ -12,7 +12,7 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
       <div className="flex justify-center gap-2 mb-2">
         {stamps.map((filled, i) => (
           <div
-            key={i}
+            key={`${i}-${filled}`}
             className="relative transition-all duration-300"
             style={{
               width: `${100 / stampGoal - 2}%`,
