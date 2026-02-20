@@ -29,7 +29,7 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
               />
             )}
             <img
-              src="/cup-stamp.png"
+              src="/cup-stamp.webp"
               alt={filled ? `Штамп ${i + 1}` : `Пусто ${i + 1}`}
               className="w-full h-auto relative z-10 transition-all duration-300"
               draggable={false}

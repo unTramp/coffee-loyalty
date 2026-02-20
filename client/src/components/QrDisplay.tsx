@@ -52,7 +52,7 @@ export function QrDisplay({ customerId, fetchQr }: QrDisplayProps) {
       {/* Card with QR overlay */}
       <div className="relative mx-auto w-full">
         <img
-          src="/background.png"
+          src="/background.webp"
           alt="Loyalty Card"
           className="w-full h-auto block"
           draggable={false}
