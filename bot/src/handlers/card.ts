@@ -1,6 +1,7 @@
 import { CommandContext, Context } from 'grammy';
 
 const API_URL = process.env.API_URL || 'http://localhost:3000';
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 
 export async function cardHandler(ctx: CommandContext<Context>) {
   const user = ctx.from;
@@ -24,12 +25,21 @@ export async function cardHandler(ctx: CommandContext<Context>) {
 
     const stamps = '☕'.repeat(data.card.stampCount) + '○'.repeat(data.stampGoal - data.card.stampCount);
 
+    const cardUrl = `${CLIENT_URL}/customer/${data.customer.id}`;
+
     await ctx.reply(
       `📋 Ваша карта лояльности\n\n` +
       `${stamps}\n` +
       `Штампы: ${data.card.stampCount}/${data.stampGoal}\n` +
       `Бесплатных кофе получено: ${data.card.totalRedeemed}\n\n` +
-      `Покажите QR-код баристе для начисления штампа.`
+      `Покажите QR-код баристе для начисления штампа.`,
+      {
+        reply_markup: {
+          inline_keyboard: [[
+            { text: '📱 Открыть карту', url: cardUrl }
+          ]],
+        },
+      }
     );
   } catch (err) {
     console.error('Card handler error:', err);
