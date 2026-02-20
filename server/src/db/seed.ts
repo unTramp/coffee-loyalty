@@ -18,7 +18,7 @@ async function seed() {
   // Create admin
   const [admin] = await db.insert(staff).values({
     shopId: shop.id,
-    email: 'admin@coffee.local',
+    email: 'dorfandy@gmail.com',
     name: 'Admin',
     role: 'admin',
   }).returning();
@@ -28,7 +28,7 @@ async function seed() {
   // Create barista
   const [barista] = await db.insert(staff).values({
     shopId: shop.id,
-    email: 'barista@coffee.local',
+    email: 'dorfandy@gmail.com',
     name: 'Barista',
     role: 'barista',
   }).returning();

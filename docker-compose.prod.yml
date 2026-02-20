@@ -34,7 +34,7 @@ services:
       HMAC_SECRET: ${HMAC_SECRET}
       BOT_TOKEN: ${BOT_TOKEN}
       BOT_SECRET: ${BOT_SECRET}
-      CLIENT_URL: ${CLIENT_URL:-http://localhost:8090}
+      CLIENT_URL: ${CLIENT_URL:-https://65-109-135-215.sslip.io}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       EMAIL_FROM: ${EMAIL_FROM:-onboarding@resend.dev}
       NODE_ENV: production
@@ -67,7 +67,7 @@ services:
       BOT_TOKEN: ${BOT_TOKEN}
       BOT_SECRET: ${BOT_SECRET}
       API_URL: http://coffee-server:3000
-      CLIENT_URL: ${CLIENT_URL:-http://localhost:8090}
+      CLIENT_URL: ${CLIENT_URL:-https://65-109-135-215.sslip.io}
       SHOP_ID: ${SHOP_ID}
       BOT_MODE: polling
       BOT_PORT: 3001

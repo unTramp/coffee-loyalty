@@ -38,7 +38,7 @@ export function CustomerHome() {
   return (
     <div className="min-h-screen px-2 py-4 max-w-md mx-auto">
       {/* Header */}
-      <div className="text-center mb-6 pt-6">
+      <div className="text-center mb-8 pt-6">
         <h1 className="text-3xl font-bold tracking-wider" style={{ color: '#1a1a1a' }}>
           cultura
         </h1>
@@ -53,7 +53,7 @@ export function CustomerHome() {
       </div>
 
       {/* Stamps */}
-      <div className="mb-5 max-w-sm mx-auto" style={{ marginTop: '-5px' }}>
+      <div className="mb-5 max-w-sm mx-auto mt-4">
         <StampCard
           stampCount={cardData.card?.stampCount ?? 0}
           stampGoal={cardData.stampGoal}
