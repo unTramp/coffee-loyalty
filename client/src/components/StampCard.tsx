@@ -13,16 +13,25 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
         {stamps.map((filled, i) => (
           <div
             key={i}
-            className="transition-all duration-300"
+            className="relative transition-all duration-300"
             style={{
               width: `${100 / stampGoal - 2}%`,
               maxWidth: 56,
             }}
           >
+            {filled && (
+              <div
+                className="absolute inset-0 rounded-full transition-all duration-300"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
+                  transform: 'scale(1.3)',
+                }}
+              />
+            )}
             <img
               src="/cup-stamp.png"
               alt={filled ? `Штамп ${i + 1}` : `Пусто ${i + 1}`}
-              className="w-full h-auto transition-all duration-300"
+              className="w-full h-auto relative z-10 transition-all duration-300"
               draggable={false}
               style={
                 filled
