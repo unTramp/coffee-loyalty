@@ -24,7 +24,7 @@ function useRememberPath() {
 }
 
 function getCustomerIdFromCookie(): string | null {
-  const match = document.cookie.match(/(?:^|; )coffee-customerId=([^;]+)/);
+  const match = document.cookie.match(/(?:^|; )coffee_cid=([^;]+)/);
   return match ? match[1] : null;
 }
 

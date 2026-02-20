@@ -13,7 +13,7 @@ export function CustomerHome() {
     if (customerId) {
       fetchCard(customerId);
       // Persist for PWA — cookie is shared between Safari and standalone mode
-      document.cookie = `coffee-customerId=${customerId};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
+      document.cookie = `coffee_cid=${customerId};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
     }
   }, [customerId]);
 

@@ -33,7 +33,7 @@ export function Join() {
 
       const data = await res.json();
       localStorage.setItem('coffee-customerId', data.customerId);
-      document.cookie = `coffee-customerId=${data.customerId};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
+      document.cookie = `coffee_cid=${data.customerId};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
       navigate(`/customer/${data.customerId}`, { replace: true });
     } catch (err) {
       setError((err as Error).message);
