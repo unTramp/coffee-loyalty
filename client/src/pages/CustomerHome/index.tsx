@@ -10,7 +10,11 @@ export function CustomerHome() {
   const { cardData, loading, error, fetchCard, fetchQr } = useStampsStore();
 
   useEffect(() => {
-    if (customerId) fetchCard(customerId);
+    if (customerId) {
+      fetchCard(customerId);
+      // Persist for PWA — cookie is shared between Safari and standalone mode
+      document.cookie = `coffee-customerId=${customerId};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
+    }
   }, [customerId]);
 
   if (loading) {

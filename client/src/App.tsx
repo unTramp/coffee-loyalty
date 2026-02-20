@@ -23,12 +23,17 @@ function useRememberPath() {
   }, [pathname]);
 }
 
+function getCustomerIdFromCookie(): string | null {
+  const match = document.cookie.match(/(?:^|; )coffee-customerId=([^;]+)/);
+  return match ? match[1] : null;
+}
+
 function SmartRedirect() {
   const lastPath = localStorage.getItem(LAST_PATH_KEY);
   if (lastPath) {
     return <Navigate to={lastPath} replace />;
   }
-  const customerId = localStorage.getItem('coffee-customerId');
+  const customerId = localStorage.getItem('coffee-customerId') || getCustomerIdFromCookie();
   if (customerId) {
     return <Navigate to={`/customer/${customerId}`} replace />;
   }
