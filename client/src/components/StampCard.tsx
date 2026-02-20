@@ -9,7 +9,7 @@ export function StampCard({ stampCount, stampGoal, totalRedeemed }: StampCardPro
 
   return (
     <div className="rounded-2xl px-5 py-3 shadow-md" style={{ background: 'linear-gradient(to bottom, #C2C78A 0%, #9DA25C 45%, #757B3E 100%)' }}>
-      <div className="flex justify-center gap-2 mb-2">
+      <div key={stampCount} className="flex justify-center gap-2 mb-2">
         {stamps.map((filled, i) => (
           <div
             key={i}
