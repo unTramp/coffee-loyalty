@@ -28,7 +28,11 @@ function SmartRedirect() {
   if (lastPath) {
     return <Navigate to={lastPath} replace />;
   }
-  return <Navigate to="/login" replace />;
+  const customerId = localStorage.getItem('coffee-customerId');
+  if (customerId) {
+    return <Navigate to={`/customer/${customerId}`} replace />;
+  }
+  return <Navigate to="/join" replace />;
 }
 
 function ProtectedRoute({ children, requiredRole }: { children: ReactNode; requiredRole?: string }) {
